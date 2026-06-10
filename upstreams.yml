@@ -1,25 +1,146 @@
-# Provenance manifest — 每个子目录 action 一条,记录它从哪个上游 commit vendored 而来。
-# 供审计与 re-vendor/sync 流程使用。vendored_commit = 上游被拷贝的 commit SHA;
-# CI 校验 vendored 内容与该 commit 处对应路径逐字节一致。
+# Provenance manifest — 每个子目录 action 一条,记录从哪个上游 commit vendored 而来。
+# 供审计与 re-vendor/sync 流程使用;CI 校验 vendored 内容与该 commit 处对应路径逐字节一致
+# (modified 标注的 action.yml 因改写 nested uses 为本地 ./ 而非字节一致)。
 version: 1
 actions:
   setup-uv:
     type: composite
-    description: Install & configure Astral uv + a Python version, then `uv sync --locked`.
     upstream_repo: 1token-tech/setup-uv
-    upstream_note: 自有 action(1token IP);非派生自 astral-sh 代码,运行时 curl astral.sh/uv/install.sh
     vendored_version: v0.3.0
-    vendored_commit: "820443485fca1b51f440e8f1ee0f87793da52891"
-    vendored_date: "2026-06-10"
-    vendored_paths: [action.yml]
+    vendored_commit: 820443485fca1b51f440e8f1ee0f87793da52891
+    vendored_date: '2026-06-10'
+    license: in-house
+    note: 自有 action(装 Astral uv)
   create-pull-request:
     type: node24
-    description: Create a pull request for changes in the Actions workspace.
     upstream_repo: peter-evans/create-pull-request
-    mirror_repo: 1token-tech/create-pull-request
-    upstream_license: MIT
     vendored_version: v8.1.1
-    vendored_commit: "5f6978faf089d4d20b00c7766989d076bb2fc7f1"
-    vendored_note: SHA 与 peter-evans/create-pull-request@v8.1.1 逐字节一致(经镜像仓库)
-    vendored_date: "2026-06-10"
-    vendored_paths: [action.yml, dist/, LICENSE]
+    vendored_commit: 5f6978faf089d4d20b00c7766989d076bb2fc7f1
+    vendored_date: '2026-06-10'
+    license: MIT
+    note: 经 1token-tech/create-pull-request 镜像
+  pnpm-action-setup:
+    type: node-js
+    upstream_repo: pnpm/action-setup
+    vendored_version: v5.0.0
+    vendored_commit: fc06bc1257f339d1d5d8b3a19a8cae5388b55320
+    vendored_date: '2026-06-10'
+    license: MIT
+  setup-flyctl:
+    type: node-js
+    upstream_repo: superfly/flyctl-actions
+    vendored_version: v1.6
+    vendored_commit: ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+    vendored_date: '2026-06-10'
+    license: MIT
+    upstream_path: setup-flyctl
+  setup-just:
+    type: composite
+    upstream_repo: extractions/setup-just
+    vendored_version: v4.0.0
+    vendored_commit: 53165ef7e734c5c07cb06b3c8e7b647c5aa16db3
+    vendored_date: '2026-06-10'
+    license: MIT
+    modified: 已改写:nested uses extractions/setup-crate -> 本地 ./setup-crate
+  setup-crate:
+    type: node24
+    upstream_repo: extractions/setup-crate
+    vendored_version: v2.0.0
+    vendored_commit: 0551596312d4008a6dfbc4d3c38fa20eaef46d2d
+    vendored_date: '2026-06-10'
+    license: Apache-2.0/MIT
+    note: setup-just 的传递依赖
+  retry:
+    type: node-js
+    upstream_repo: nick-fields/retry
+    vendored_version: v4.0.0
+    vendored_commit: ad984534de44a9489a53aefd81eb77f87c70dc60
+    vendored_date: '2026-06-10'
+    license: MIT
+  codecov-action:
+    type: composite
+    upstream_repo: codecov/codecov-action
+    vendored_version: v6.0.2
+    vendored_commit: fb8b3582c8e4def4969c97caa2f19720cb33a72f
+    vendored_date: '2026-06-10'
+    license: see upstream
+    note_second_version: 'v4.6.0 @ b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 (cam pins @v4). DIFFERENT
+      action TYPE: node-js, runs.using=''node20'', m'
+  reviewdog-action-setup:
+    type: composite
+    upstream_repo: reviewdog/action-setup
+    vendored_version: v1.5.0
+    vendored_commit: d8a7baabd7f3e8544ee4dbde3ee41d0011c3a93f
+    vendored_date: '2026-06-10'
+    license: MIT
+  reviewdog-action-yamllint:
+    type: docker
+    upstream_repo: reviewdog/action-yamllint
+    vendored_version: v1.21.0
+    vendored_commit: f01d8a48fd8d89f89895499fca2cff09f9e9e8c0
+    vendored_date: '2026-06-10'
+    license: MIT
+  reviewdog-action-shellcheck:
+    type: composite
+    upstream_repo: reviewdog/action-shellcheck
+    vendored_version: v1.32.0
+    vendored_commit: 4c07458293ac342d477251099501a718ae5ef86e
+    vendored_date: '2026-06-10'
+    license: MIT
+    modified: 已改写:nested uses reviewdog/action-setup -> 本地 ./reviewdog-action-setup(用 vendored v1.5.0)
+  reviewdog-action-hadolint:
+    type: composite
+    upstream_repo: reviewdog/action-hadolint
+    vendored_version: v1.50.5
+    vendored_commit: 921946a7ebaaf08ac72607bad67209f4e52b5407
+    vendored_date: '2026-06-10'
+    license: MIT
+  enable-pull-request-automerge:
+    type: composite
+    upstream_repo: peter-evans/enable-pull-request-automerge
+    vendored_version: v3.0.0
+    vendored_commit: a660677d5469627102a1c1e11409dd063606628d
+    vendored_date: '2026-06-10'
+    license: MIT
+  actions-gh-pages:
+    type: node-js
+    upstream_repo: peaceiris/actions-gh-pages
+    vendored_version: v4.1.0
+    vendored_commit: 84c30a85c19949d7eee79c4ff27748b70285e453
+    vendored_date: '2026-06-10'
+    license: MIT
+  setup-bun:
+    type: node-js
+    upstream_repo: oven-sh/setup-bun
+    vendored_version: v2.2.0
+    vendored_commit: 0c5077e51419868618aeaa5fe8019c62421857d6
+    vendored_date: '2026-06-10'
+    license: MIT
+  golangci-lint-action:
+    type: node-js
+    upstream_repo: golangci/golangci-lint-action
+    vendored_version: v8.0.0
+    vendored_commit: 4afd733a84b1f43292c63897423277bb7f4313a9
+    vendored_date: '2026-06-10'
+    license: MIT
+  pull-request-stats:
+    type: node-js
+    upstream_repo: flowwer-dev/pull-request-stats
+    vendored_version: v2.15.2
+    vendored_commit: 0dde6edf8b7db75684533021212c6e85fb987dbb
+    vendored_date: '2026-06-10'
+    license: MIT
+  paths-filter:
+    type: node-js
+    upstream_repo: dorny/paths-filter
+    vendored_version: v4.0.1
+    vendored_commit: fbd0ab8f3e69293af611ebaee6363fc25e6d187d
+    vendored_date: '2026-06-10'
+    license: MIT
+  vercel-action:
+    type: node-js
+    upstream_repo: amondnet/vercel-action
+    vendored_version: v42.3.0
+    vendored_commit: de09aeac2ace6599ec9b11ef87558759a496bac4
+    vendored_date: '2026-06-10'
+    license: MIT

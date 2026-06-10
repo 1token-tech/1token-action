@@ -17,8 +17,29 @@
 
 | Action | 类型 | 当前版本 | 上游 | tag |
 |---|---|---|---|---|
-| [setup-uv](./setup-uv) | composite | v0.3.0 | 自有(装 Astral uv) | `setup-uv/v0.3.0` |
-| [create-pull-request](./create-pull-request) | node24 JS | v8.1.1 | peter-evans/create-pull-request (MIT) | `create-pull-request/v8.1.1` |
+| [setup-uv](./setup-uv) | composite | v0.3.0 | 1token-tech/setup-uv | `setup-uv/v0.3.0` |
+| [create-pull-request](./create-pull-request) | node24 | v8.1.1 | peter-evans/create-pull-request | `create-pull-request/v8.1.1` |
+| [pnpm-action-setup](./pnpm-action-setup) | node-js | v5.0.0 | pnpm/action-setup | `pnpm-action-setup/v5.0.0` |
+| [setup-flyctl](./setup-flyctl) | node-js | v1.6 | superfly/flyctl-actions/setup-flyctl | `setup-flyctl/v1.6` |
+| [setup-just](./setup-just) | composite | v4.0.0 ⚠改写 | extractions/setup-just | `setup-just/v4.0.0` |
+| [setup-crate](./setup-crate) | node24 | v2.0.0 | extractions/setup-crate | `setup-crate/v2.0.0` |
+| [retry](./retry) | node-js | v4.0.0 | nick-fields/retry | `retry/v4.0.0` |
+| [codecov-action](./codecov-action) | composite | v6.0.2 (+v4.6.0) | codecov/codecov-action | `codecov-action/v6.0.2` |
+| [reviewdog-action-setup](./reviewdog-action-setup) | composite | v1.5.0 | reviewdog/action-setup | `reviewdog-action-setup/v1.5.0` |
+| [reviewdog-action-yamllint](./reviewdog-action-yamllint) | docker | v1.21.0 | reviewdog/action-yamllint | `reviewdog-action-yamllint/v1.21.0` |
+| [reviewdog-action-shellcheck](./reviewdog-action-shellcheck) | composite | v1.32.0 ⚠改写 | reviewdog/action-shellcheck | `reviewdog-action-shellcheck/v1.32.0` |
+| [reviewdog-action-hadolint](./reviewdog-action-hadolint) | composite | v1.50.5 | reviewdog/action-hadolint | `reviewdog-action-hadolint/v1.50.5` |
+| [enable-pull-request-automerge](./enable-pull-request-automerge) | composite | v3.0.0 | peter-evans/enable-pull-request-automerge | `enable-pull-request-automerge/v3.0.0` |
+| [actions-gh-pages](./actions-gh-pages) | node-js | v4.1.0 | peaceiris/actions-gh-pages | `actions-gh-pages/v4.1.0` |
+| [setup-bun](./setup-bun) | node-js | v2.2.0 | oven-sh/setup-bun | `setup-bun/v2.2.0` |
+| [golangci-lint-action](./golangci-lint-action) | node-js | v8.0.0 | golangci/golangci-lint-action | `golangci-lint-action/v8.0.0` |
+| [pull-request-stats](./pull-request-stats) | node-js | v2.15.2 | flowwer-dev/pull-request-stats | `pull-request-stats/v2.15.2` |
+| [paths-filter](./paths-filter) | node-js | v4.0.1 | dorny/paths-filter | `paths-filter/v4.0.1` |
+| [vercel-action](./vercel-action) | node-js | v42.3.0 | amondnet/vercel-action | `vercel-action/v42.3.0` |
+
+> ⚠改写 = 该 action 的 nested `uses:` 被改写为本地 `./` 引用(真内部化),action.yml 非字节一致。
+> codecov-action 有 v6.0.2(composite)与 v4.6.0(JS,tag `codecov-action/v4.6.0`)两版并存。
+> claude-code-action 经评估**未内部化**(~190 文件、运行时 bun install、高频迭代);其消费方只把 @v1 钉成 SHA。
 
 > provenance(每个 action 的上游 repo / tag / commit)见 [`upstreams.yml`](./upstreams.yml)。
 

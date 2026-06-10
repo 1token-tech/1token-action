@@ -1,0 +1,139 @@
+name: Vercel Action
+description: This action make a deployment with github actions instead of Vercel builder.
+inputs:
+  vercel-token:
+    description: Vercel token
+    required: true
+  vercel-args:
+    required: false
+    default: ''
+    description: 'Ad-hoc CLI flags forwarded directly to the Vercel CLI (e.g. "--prod --force"). The CLI is the default deployment mode. Mutually exclusive with experimental-api.'
+  github-comment:
+    required: false
+    default: 'true'
+    description: 'if you want to comment on pr and commit, set true, default: true'
+  github-token:
+    required: false
+    description: 'if you want to comment on pr and commit, set token'
+  github-deployment:
+    required: false
+    default: 'false'
+    description: 'if you want to create github deployment, set true, default: false'
+  github-deployment-environment:
+    required: false
+    description: 'The environment for the GitHub deployment (e.g., production, staging, preview). If not specified, auto-detects: "production" when vercel-args contains --prod or --production, otherwise "preview".'
+    default: ''
+  working-directory:
+    required: false
+    description: the working directory
+  vercel-project-id:
+    required: false
+    description: 'Vercel CLI 17+, ❗️  The `name` property in vercel.json is deprecated (https://zeit.ink/5F)'
+  vercel-org-id:
+    required: false
+    description: 'Vercel team ID (also used as teamId for API deployments). Vercel CLI 17+, ❗️  The `name` property in vercel.json is deprecated (https://zeit.ink/5F)'
+  vercel-project-name:
+    required: false
+    description: "The name of the project; if absent we'll use the `vercel inspect` command to determine."
+  vercel-version:
+    required: false
+    description: vercel-cli package version
+  scope:
+    required: false
+    description: 'Team slug for the Vercel CLI --scope flag (used in the default CLI deployment mode). Prefer vercel-org-id, which works for both CLI and experimental API modes.'
+  zeit-token:
+    description: zeit.co token
+    required: false
+    deprecationMessage: 'Zeit is now Vercel. Use "vercel-token" instead'
+  now-args:
+    description: ''
+    required: false
+    default: ''
+    deprecationMessage: 'Zeit is now Vercel. Use "vercel-args" instead.'
+  now-project-id:
+    required: false
+    description: 'Vercel CLI 17+, ❗️  The `name` property in vercel.json is deprecated (https://zeit.ink/5F)'
+    deprecationMessage: 'Zeit is now Vercel. Use "vercel-project-id" instead.'
+  now-org-id:
+    required: false
+    description: 'Vercel CLI 17+, ❗️  The `name` property in vercel.json is deprecated (https://zeit.ink/5F)'
+    deprecationMessage: 'Zeit is now Vercel. Use "vercel-org-id" instead.'
+  alias-domains:
+    required: false
+    description: 'You can assign a domain to this deployment. Please note that this domain must have been configured in the project. You can use pull request number via `{{PR_NUMBER}}` and branch via `{{BRANCH}}`'
+    default: ''
+  target:
+    required: false
+    description: 'Deployment target: "production" or "preview" (default: preview). Replaces --prod flag in vercel-args.'
+    default: preview
+  prebuilt:
+    required: false
+    description: 'Deploy prebuilt output (default: false). Replaces --prebuilt flag in vercel-args.'
+    default: 'false'
+  vercel-build:
+    required: false
+    description: 'Run "vercel pull" + "vercel build" inside the action before deploying, then upload the resulting .vercel/output via the prebuilt deploy path. Mutually exclusive with prebuilt. Default: false.'
+    default: 'false'
+  vercel-output-dir:
+    required: false
+    description: 'Path to the prebuilt output directory. Defaults to {working-directory}/.vercel/output when prebuilt is true.'
+    default: ''
+  force:
+    required: false
+    description: 'Force new deployment, bypassing dedupe and build cache (default: false). Replaces --force flag in vercel-args.'
+    default: 'false'
+  env:
+    required: false
+    description: Environment variables for the deployment (KEY=VALUE per line). Replaces --env flags in vercel-args.
+    default: ''
+  build-env:
+    required: false
+    description: Build-time environment variables (KEY=VALUE per line). Replaces --build-env flags in vercel-args.
+    default: ''
+  regions:
+    required: false
+    description: 'Deployment regions, comma-separated (e.g. "iad1,sfo1").'
+    default: ''
+  archive:
+    required: false
+    description: 'Upload format: "tgz" for compressed archive, or empty for individual files.'
+    default: ''
+  root-directory:
+    required: false
+    description: Root directory of the project relative to the repository root.
+    default: ''
+  auto-assign-custom-domains:
+    required: false
+    description: 'Automatically assign custom domains to this deployment (default: true).'
+    default: 'true'
+  custom-environment:
+    required: false
+    description: Custom environment slug or ID for the deployment.
+    default: ''
+  public:
+    required: false
+    description: 'Make deployment source publicly accessible (default: false).'
+    default: 'false'
+  with-cache:
+    required: false
+    description: 'Retain build cache from previous deployments (default: false).'
+    default: 'false'
+  experimental-api:
+    required: false
+    description: 'Opt in to the experimental API-based deployment via @vercel/client. The CLI is the default and recommended path. The API client relies on an internal Vercel package without semver guarantees and may break across updates. Mutually exclusive with vercel-args (default: false).'
+    default: 'false'
+
+outputs:
+  preview-url:
+    description: deployment preview URL
+  preview-name:
+    description: deployment preview name
+  deployment-id:
+    description: GitHub Deployment ID (only set when github-deployment is true)
+runs:
+  using: node24
+  main: dist/index.js
+
+branding:
+  icon: triangle
+  color: white

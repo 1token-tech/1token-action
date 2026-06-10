@@ -1,0 +1,21 @@
+name: 'Setup just'
+author: 'Ross MacArthur'
+description: 'Install the just command runner'
+branding:
+  icon: 'play'
+  color: 'blue'
+inputs:
+  just-version:
+    description: 'A valid semver specifier of the just version to install'
+  github-token:
+    description: 'Github token to use to authenticate downloads'
+    required: false
+    default: ${{ github.token }}
+runs:
+  using: composite
+  steps:
+    - uses: ./setup-crate # internalized: extractions/setup-crate v2.0.0 (0551596)
+      with:
+        repo: casey/just
+        version: ${{ inputs.just-version }}
+        github-token: ${{ inputs.github-token }}
