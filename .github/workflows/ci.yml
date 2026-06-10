@@ -1,0 +1,19 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-actions:
+    runs-on: ubuntu-latest
+    steps:
+      # SHA-pin,dogfood 本仓库约定(checkout v5.0.1)
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - name: Install PyYAML
+        run: pip install --quiet pyyaml
+      - name: Validate vendored actions
+        run: python3 scripts/validate_actions.py

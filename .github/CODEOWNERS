@@ -1,0 +1,12 @@
+# CODEOWNERS — 配合分支保护强制 review。
+# TODO(org): 把下面的占位 owner 换成真实 team(尤其 token 类 action 路径需安全 reviewer)。
+
+# 默认 owner
+* @leisun123
+
+# Tier 1:处理 token/secret 的高价值 action —— 应由安全相关 team 审(建议 2 审)。
+/create-pull-request/ @leisun123
+# 未来纳入时一并加:
+# /enable-pull-request-automerge/  @<security-team>
+# /setup-flyctl/                   @<security-team>
+# /codecov-action/                 @<security-team>

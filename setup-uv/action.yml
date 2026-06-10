@@ -1,0 +1,49 @@
+name: 'Setup uv Python Package Manager'
+description: 'Install and configure uv Python package manager with specified Python version'
+inputs:
+  python-version:
+    description: 'Python version to install'
+    required: false
+    default: '3.13.9'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup PATH for uv
+      shell: bash
+      run: |
+        # Add $HOME/.local/bin to PATH if not already there
+        if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          echo "Added $HOME/.local/bin to PATH"
+        else
+          echo "$HOME/.local/bin already in PATH"
+        fi
+
+    - name: Install uv if needed
+      shell: bash
+      run: |
+        if [ ! -f "$HOME/.local/bin/uv" ]; then
+          echo "📦 Installing uv Python package manager..."
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "✅ uv installed successfully"
+        else
+          echo "✅ uv is already installed"
+        fi
+
+        # Verify installation
+        $HOME/.local/bin/uv --version
+
+    - name: Setup Python with uv
+      shell: bash
+      run: |
+        echo "🐍 Setting up Python ${{ inputs.python-version }}..."
+        uv python install ${{ inputs.python-version }}
+        echo "✅ Python ${{ inputs.python-version }} installed"
+
+    - name: Sync dependencies
+      shell: bash
+      run: |
+        echo "📦 Syncing Python dependencies..."
+        uv sync --locked
+        echo "✅ Dependencies synced successfully"

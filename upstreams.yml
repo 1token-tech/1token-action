@@ -1,0 +1,25 @@
+# Provenance manifest — 每个子目录 action 一条,记录它从哪个上游 commit vendored 而来。
+# 供审计与 re-vendor/sync 流程使用。vendored_commit = 上游被拷贝的 commit SHA;
+# CI 校验 vendored 内容与该 commit 处对应路径逐字节一致。
+version: 1
+actions:
+  setup-uv:
+    type: composite
+    description: Install & configure Astral uv + a Python version, then `uv sync --locked`.
+    upstream_repo: 1token-tech/setup-uv
+    upstream_note: 自有 action(1token IP);非派生自 astral-sh 代码,运行时 curl astral.sh/uv/install.sh
+    vendored_version: v0.3.0
+    vendored_commit: "820443485fca1b51f440e8f1ee0f87793da52891"
+    vendored_date: "2026-06-10"
+    vendored_paths: [action.yml]
+  create-pull-request:
+    type: node24
+    description: Create a pull request for changes in the Actions workspace.
+    upstream_repo: peter-evans/create-pull-request
+    mirror_repo: 1token-tech/create-pull-request
+    upstream_license: MIT
+    vendored_version: v8.1.1
+    vendored_commit: "5f6978faf089d4d20b00c7766989d076bb2fc7f1"
+    vendored_note: SHA 与 peter-evans/create-pull-request@v8.1.1 逐字节一致(经镜像仓库)
+    vendored_date: "2026-06-10"
+    vendored_paths: [action.yml, dist/, LICENSE]
