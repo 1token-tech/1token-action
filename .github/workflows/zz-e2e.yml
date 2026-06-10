@@ -1,0 +1,36 @@
+name: zz-e2e
+on:
+  push:
+    branches: [e2e-test]
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  test-setup-uv:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - name: use monorepo setup-uv (subdir composite)
+        uses: 1token-tech/1token-action/setup-uv@bac1399040bfbd80df0aa3e014dd85e530fab595 # setup-uv/v0.3.0
+      - name: prove uv works
+        run: |
+          uv --version
+          uv run python --version
+  test-create-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - name: make a change
+        run: echo "monorepo e2e ${GITHUB_SHA}" > e2e-marker.txt
+      - name: use monorepo create-pull-request (subdir JS)
+        id: cpr
+        uses: 1token-tech/1token-action/create-pull-request@bac1399040bfbd80df0aa3e014dd85e530fab595 # create-pull-request/v8.1.1
+        with:
+          token: ${{ secrets.E2E_PAT }}
+          base: e2e-test
+          branch: e2e-monorepo-auto-pr
+          title: "e2e: monorepo create-pull-request"
+          commit-message: "e2e: marker"
+          body: "e2e of 1token-tech/1token-action/create-pull-request@bac1399040bfbd80df0aa3e014dd85e530fab595"
+      - name: report
+        run: echo "PR=${{ steps.cpr.outputs.pull-request-number }} op=${{ steps.cpr.outputs.pull-request-operation }}"
