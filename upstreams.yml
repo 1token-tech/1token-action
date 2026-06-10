@@ -41,7 +41,7 @@ actions:
     vendored_commit: 53165ef7e734c5c07cb06b3c8e7b647c5aa16db3
     vendored_date: '2026-06-10'
     license: MIT
-    modified: 已改写:nested uses extractions/setup-crate -> 本地 ./setup-crate
+    modified: 已改写:nested uses extractions/setup-crate -> monorepo 1token-tech/1token-action/setup-crate@<sha>(./ 在跨 repo 消费时会指向消费方 workspace,故用全路径)
   setup-crate:
     type: node24
     upstream_repo: extractions/setup-crate
@@ -88,7 +88,7 @@ actions:
     vendored_commit: 4c07458293ac342d477251099501a718ae5ef86e
     vendored_date: '2026-06-10'
     license: MIT
-    modified: 已改写:nested uses reviewdog/action-setup -> 本地 ./reviewdog-action-setup(用 vendored v1.5.0)
+    modified: 已改写:nested uses reviewdog/action-setup -> monorepo 1token-tech/1token-action/reviewdog-action-setup@<sha>(vendored v1.5.0;./ 跨 repo 失效故用全路径)
   reviewdog-action-hadolint:
     type: composite
     upstream_repo: reviewdog/action-hadolint

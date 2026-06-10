@@ -67,7 +67,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: ./reviewdog-action-setup # internalized: reviewdog/action-setup (vendored v1.5.0)
+    - uses: 1token-tech/1token-action/reviewdog-action-setup@15d1498a3edcfb1a64deb6170da7415c696d6ccb # reviewdog-action-setup/v1.5.0
       with:
         reviewdog_version: v0.21.0
     - run: $GITHUB_ACTION_PATH/script.sh
