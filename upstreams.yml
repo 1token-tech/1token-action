@@ -63,9 +63,10 @@ actions:
     vendored_version: v6.0.2
     vendored_commit: fb8b3582c8e4def4969c97caa2f19720cb33a72f
     vendored_date: '2026-06-10'
-    license: see upstream
-    note_second_version: 'v4.6.0 @ b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 (cam pins @v4). DIFFERENT
-      action TYPE: node-js, runs.using=''node20'', m'
+    license: Apache-2.0
+    second_version: v4.6.0
+    second_commit: b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238
+    second_note: cam 用 @v4(node20 JS,与 v6.0.2 composite 类型不同);单独打 tag codecov-action/v4.6.0
   reviewdog-action-setup:
     type: composite
     upstream_repo: reviewdog/action-setup
