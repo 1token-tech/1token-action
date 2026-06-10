@@ -45,5 +45,5 @@ runs:
       shell: bash
       run: |
         echo "📦 Syncing Python dependencies..."
-        uv sync --locked
+        uv sync
         echo "✅ Dependencies synced successfully"
